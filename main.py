@@ -3,7 +3,7 @@ import glob
 import tqdm
 import string
 import shutil
-import random
+import os
 
 def is_good_string(s: str) -> bool:
     if s.count("(") != s.count(")"):
@@ -173,7 +173,7 @@ for i in sl:
                     for j in range(i[1] - 1, i[2]):
                         writer.add_page(reader.pages[j])
 
-                    with open(f"inputs/c/{files[mapstr.index(i[1])]}_0_{i[1]}_{i[2]}.pdf", "wb") as outfile:
+                    with open(f"inputs/c/{files[mapstr.index(i[0])]}_0_{i[1]}_{i[2]}.pdf", "wb") as outfile:
                         writer.write(outfile)
 
                 print(f"{files[mapstr.index(i[0])]} (pages {i[1]}-{i[2]})")
@@ -207,7 +207,7 @@ for i in sl:
                         with open(f"inputs/c/{files[mapstr.index(i[0][1])]}_90_{i[1]}_{i[2]}.pdf", "wb") as outfile:
                             writer.write(outfile)
 
-                    print(f"{files[mapstr.index(i[0][1])]} (90° clockwise, pages {i[1]}-{i[2]})")
+                    print(f"{files[mapstr.index(i[0][1])]} (90° counterclockwise, pages {i[1]}-{i[2]})")
                     l.append(f"c/{files[mapstr.index(i[0][1])]}_90_{i[1]}_{i[2]}")
                     
                 if i[0][0] == "=":
@@ -230,3 +230,11 @@ for i in sl:
 merge_pdfs(l, filename)
 
 print("Merged")
+
+for i in glob.glob("inputs/c/*.pdf"):
+    print(f"Deleting {i}")
+    os.remove(i)
+
+for i in glob.glob("cache/*.pdf"):
+    print(f"Deleting {i}")
+    os.remove(i)
