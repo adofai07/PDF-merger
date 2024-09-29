@@ -231,10 +231,10 @@ merge_pdfs(l, filename)
 
 print("Merged")
 
-for i in glob.glob("inputs/c/*.pdf"):
+for i in glob.glob(r"inputs\c\*.pdf"):
     print(f"Deleting {i}")
     os.remove(i)
 
-for i in glob.glob("cache/*.pdf"):
+for i in glob.glob(r"cache\*.pdf"):
     print(f"Deleting {i}")
     os.remove(i)
