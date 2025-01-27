@@ -53,7 +53,6 @@ def merge_pdfs(file_names: list[str], output_file: str="merged"):
 
 files = [i[7:-4] for i in glob.glob("inputs/*.pdf")]
 mapstr = string.digits + string.ascii_lowercase + string.ascii_uppercase
-filename = "merged"
 
 files.sort()
 
@@ -66,6 +65,7 @@ for i in range(len(files)):
 print()
 
 s = input("Files: ")
+filename = input("File name: ") or "merged"
 sl = []
 
 assert is_good_string(s)
