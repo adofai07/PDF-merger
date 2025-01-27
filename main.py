@@ -1,6 +1,6 @@
 import PyPDF2
 import glob
-import tqdm
+import time
 import string
 import shutil
 import os
@@ -27,6 +27,7 @@ def is_good_string(s: str) -> bool:
 def merge_pdfs(file_names: list[str], output_file: str="merged"):
     merger = PyPDF2.PdfWriter()
     l = len(file_names)
+    st = time.time()
 
     print("\nReading...")
 
@@ -41,7 +42,7 @@ def merge_pdfs(file_names: list[str], output_file: str="merged"):
 
         merger.append(f"cache/{r :012.0f}.pdf")
 
-        print(f"{cnt + 1} / {l}, {len(merger.pages)} pages")
+        print(f"({int(time.time() - st)} seconds) {cnt + 1} / {l}, {len(merger.pages)} pages")
 
     # print(merger.pages[0].mediabox.width, merger.pages[0].mediabox.height)
     # print(merger.pages[2].mediabox.width, merger.pages[2].mediabox.height)
@@ -229,7 +230,7 @@ for i in sl:
 
 merge_pdfs(l, filename)
 
-print("Merged")
+print(f"Merged to {filename}.pdf")
 
 for i in glob.glob(r"inputs\c\*.pdf"):
     print(f"Deleting {i}")
@@ -238,3 +239,6 @@ for i in glob.glob(r"inputs\c\*.pdf"):
 for i in glob.glob(r"cache\*.pdf"):
     print(f"Deleting {i}")
     os.remove(i)
+
+print("tab will automatically close after 3 seconds")
+time.sleep(3)
